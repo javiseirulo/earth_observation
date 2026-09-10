@@ -1,12 +1,19 @@
 
 # MAIN FUNCTION TO CALL THE L1B MODULE
 
+import os
+
 from l1b.src.l1b import l1b
 
 # Directory - this is the common directory for the execution of the E2E, all modules
-auxdir = r'C:\EODP\eodp_students\auxiliary'
-indir = r"C:\EODP\EODP_TER_2021_working\EODP-TS-L1B\input"
-outdir = r"C:\EODP\EODP_TER_2021_working\EODP-TS-L1B\myoutputs"
+# Paths are resolved relative to the repository root so the module runs from any cwd.
+rootdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+auxdir = os.path.join(rootdir, 'auxiliary')
+indir = '/Users/javi/Documents/Javi/Ingenieria_Aeroespacial/MISE/EarthObservation/drive-download-20260910T163359Z-1-001/EODP_TER_2021/EODP-TS-L1B/input'
+outdir = '/Users/javi/Documents/Javi/Ingenieria_Aeroespacial/MISE/EarthObservation/drive-download-20260910T163359Z-1-001/EODP_TER_2021/EODP-TS-L1B/output_project_by_javi'
+
+os.makedirs(outdir, exist_ok=True)
 
 # Initialise the ISM
 myL1b = l1b(auxdir, indir, outdir)
