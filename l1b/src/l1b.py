@@ -63,6 +63,9 @@ class l1b(initL1b):
         :return: TOA in DN, equalized
         """
         #TODO
+
+        toa = (toa - eq_add) / eq_mult # from page 88 (chapter 8.1.1)
+
         return toa
 
     def restoration(self,toa,gain):
@@ -73,6 +76,11 @@ class l1b(initL1b):
         :return: TOA in radiances [mW/sr/m2]
         """
         #TODO
+
+        toa = toa * gain
+
+
+
         self.logger.debug('Sanity check. TOA in radiances after gain application ' + str(toa[1,-1]) + ' [mW/m2/sr]')
 
         return toa

@@ -16,5 +16,5 @@ outdir = '/Users/javi/Documents/Javi/Ingenieria_Aeroespacial/MISE/EarthObservati
 os.makedirs(outdir, exist_ok=True)
 
 # Initialise the ISM
-myL1b = l1b(auxdir, indir, outdir)
+myL1b = l1b(auxdir, indir, outdir)  # instance of the class l1b, which is under /Users/javi/Documents/Javi/Ingenieria_Aeroespacial/MISE/EarthObservation/earth_observation/l1b/src/l1b.py
 myL1b.processModule()

@@ -1,0 +1,10 @@
+We have different levels of processing:
+
+- RAW : we record with our sensor energy per square meter per angle
+- L0: digital units (0-255)
+
+L0 - L1 : restoration of the
+
+memory formatting unit in the mass memory of the settling is a digital number if we take a picture with our full what we get is actually full function energy army that what we write in the memory of the full unit in the P and D file is a D
+the ratio is what we call the gain : ratio between physical units (w/m^2/stereoradean/LSB)
+
