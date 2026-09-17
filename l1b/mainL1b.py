@@ -11,7 +11,7 @@ rootdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 auxdir = os.path.join(rootdir, 'auxiliary')
 indir = '/Users/javi/Documents/Javi/Ingenieria_Aeroespacial/MISE/EarthObservation/drive-download-20260910T163359Z-1-001/EODP_TER_2021/EODP-TS-L1B/input'
-outdir = '/Users/javi/Documents/Javi/Ingenieria_Aeroespacial/MISE/EarthObservation/drive-download-20260910T163359Z-1-001/EODP_TER_2021/EODP-TS-L1B/output_project_by_javi'
+outdir = '/Users/javi/Documents/Javi/Ingenieria_Aeroespacial/MISE/EarthObservation/drive-download-20260910T163359Z-1-001/EODP_TER_2021/EODP-TS-L1B/output_test_equalized'
 
 os.makedirs(outdir, exist_ok=True)
 
