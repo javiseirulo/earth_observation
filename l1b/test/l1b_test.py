@@ -8,12 +8,19 @@
 
 import os
 import numpy as np
+import matplotlib.pyplot as plt
 from netCDF4 import Dataset
 
 # path settings
 base_folder = '/Users/javi/Documents/Javi/Ingenieria_Aeroespacial/MISE/EarthObservation/drive-download-20260910T163359Z-1-001/EODP_TER_2021/EODP-TS-L1B/'
 ref_folder = os.path.join(base_folder, "output")
 test_folder = os.path.join(base_folder, "output_test_equalized")
+input_folder = os.path.join(base_folder, "input")
+not_eq_folder = os.path.join(base_folder, "output_test_not_equalized")
+
+# band and row used for the plot
+plot_band = "VNIR-0"
+plot_row = 1
 
 # max mismatched values to print per variable
 max_print_errors = 5
@@ -128,5 +135,46 @@ def run_comparison():
     print("=" * 50)
 
 
+def read_toa(file_path):
+    # read the "toa" variable from a netcdf file
+    with Dataset(file_path, "r") as src:
+        toa = np.array(src.variables["toa"][:])
+    return toa
+
+
+def plot_equalization_effect(band, row):
+    # build the three file paths to compare
+    input_file = os.path.join(input_folder, f"ism_toa_isrf_{band}.nc")
+    not_eq_file = os.path.join(not_eq_folder, f"l1b_toa_{band}.nc")
+    eq_file = os.path.join(test_folder, f"l1b_toa_{band}.nc")
+
+    # read one row (across track) of each toa
+    toa_input = read_toa(input_file)[row, :]
+    toa_not_eq = read_toa(not_eq_file)[row, :]
+    toa_eq = read_toa(eq_file)[row, :]
+
+    # act pixel axis
+    act_pixels = np.arange(len(toa_input))
+
+    # plot the three curves together
+    plt.figure(figsize=(10, 5))
+    plt.plot(act_pixels, toa_input, color="blue", label="input (truth, ism_toa_isrf)")
+    plt.plot(act_pixels, toa_not_eq, color="red", label="l1b toa, not equalized")
+    plt.plot(act_pixels, toa_eq, color="black", label="l1b toa, equalized")
+
+    plt.title(f"effect of the equalization for {band}, row {row}")
+    plt.xlabel("act pixel [-]")
+    plt.ylabel("toa [mW/m2/sr]")
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+
+    out_path = os.path.join(test_folder, f"equalization_effect_{band}.png")
+    plt.savefig(out_path)
+    print(f"plot saved to: {out_path}")
+    plt.show()
+
+
 if __name__ == "__main__":
     run_comparison()
+    plot_equalization_effect(plot_band, plot_row)

@@ -8,3 +8,21 @@ L0 - L1 : restoration of the
 memory formatting unit in the mass memory of the settling is a digital number if we take a picture with our full what we get is actually full function energy army that what we write in the memory of the full unit in the P and D file is a D
 the ratio is what we call the gain : ratio between physical units (w/m^2/stereoradean/LSB)
 
+
+
+
+
+---
+7. Need modelling in order to have the performance that you want. Need a simulator to model the
+calibration tools.
+
+l1b: easy to implement, simple calibration (others more complicated like FFT)
+7.2 detection stage:
+
+
+
+
+Spectral response: page 32 of 122 of pdf
+in ismConfig.py we have all the configuration for the instrument
+
+
