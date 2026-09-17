@@ -93,6 +93,8 @@ class opticalPhase(initIsm):
         :return: TOA image in irradiances [mW/m2]
         """
         # TODO
+
+        # this is the next step ........................................... use page 34 of 122 equation of I = (end of page)
         return toa
 
 
@@ -115,6 +117,28 @@ class opticalPhase(initIsm):
         :return: TOA image 2D in radiances [mW/m2]
         """
         # TODO
+
+        isrf, wv_isrf = readIsrf(self.auxdir + '/' + self.ismConfig.isrffile, band)
+
+        # initialize the output
+        toa = np.zeros((sgm_toa.shape[0],sgm_toa.shape[1]))
+        # 1. normalise ISRF
+        isrf = isrf/np.sum(isrf)
+        # 2. CONVERT ISRF to nanometers
+        wv_isrf = wv_isrf*1000 # convert to nanometers
+        # 3. creating interpolant of the ISRF
+        #cs = interp1d(wv_isrf, isrf, fill_value=(0,0), bounds_error=False)
+        #interp_isrf = cs(sgm_wv) # 1d vector
+        #for ialt in range(sgm_toa.shape[0]):
+        #    for iact in range(sgm_toa.shape[1]):
+        #        toa[ialt, iact] = np.sum(sgm_toa[ialt, iact] * interp_isrf)
+
+        for ialt in range(sgm_toa.shape[0]):
+            for iact in range(sgm_toa.shape[1]):
+                cs = interp1d(sgm_wv, sgm_toa[ialt,iact,:], fill_value=(0,0), bounds_error=False)
+                sgm_inter = cs(wv_isrf)
+                toa[ialt, iact] = np.sum(sgm_inter *isrf)
+
         return toa
 
 
