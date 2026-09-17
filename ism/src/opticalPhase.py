@@ -92,9 +92,10 @@ class opticalPhase(initIsm):
         :param Tr: Optical transmittance [-]
         :return: TOA image in irradiances [mW/m2]
         """
-        # TODO
+        # radiance to irradiance conversion, page 34
+        # I = Tr * L * (pi/4) * (D/f)^2, where toa is the radiance L
+        toa = Tr * toa * (pi / 4) * (D / f) ** 2 # new toa is the irradiance
 
-        # this is the next step ........................................... use page 34 of 122 equation of I = (end of page)
         return toa
 
 
