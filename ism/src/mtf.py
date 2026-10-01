@@ -205,4 +205,12 @@ class mtf:
         """
         #TODO
 
+        # tenemos que implementarlo luego para replicar una imagen que es simetrica. una imagen que esta en el
+        # documento grande. Figure 7-52 en pg 65. use the fn2D to cut the 100x150 through the 150.
+        # para el report cross validation de sus outputs con los nuestros. validar los mtf. irsf toa and irsf optical.
+        # all out outputs and hers. at the plot of the system mtf and explain what are the dominating effects. the two dimensining
+        # mtf of out system.
+
+
+
 
