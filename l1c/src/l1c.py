@@ -29,7 +29,6 @@ class l1c(initL1c):
             toa = readToa(self.l1bdir, self.globalConfig.l1b_toa + band + '.nc')
             lat,lon = readGeodetic(self.gmdir, self.globalConfig.gm_geoloc)
             self.checkSize(lat,toa)
-
             # L1C reprojection onto the MGRS grid
             # -------------------------------------------------------------------------------
             lat_l1c, lon_l1c, toa_l1c = self.l1cProjtoa(lat, lon, toa, band)
@@ -62,7 +61,38 @@ class l1c(initL1c):
         :param band: band
         :return: L1C radiances, L1C latitude and longitude in degrees
         '''
-        #TODO
+        # declare an empty set since we want to find the nearest mgrs to our l1b values
+        m = mgrs.MGRS()
+        mgrs_tiles = set([])
+
+        for ii in range(toa.shape[0]): #100
+            for jj in range(toa.shape[1]): #150
+                mgrstile_aux = m.toMGRS(lat[ii,jj], lon[ii,jj], MGRSPrecision = self.l1cConfig.mgrs_tile_precision) # we are working in degrees so leave it as default, but increase the MGRSPrecision to 3 for less than the 1m default
+                mgrs_tiles.add(mgrstile_aux)
+
+        mgrs_tiles = list(mgrs_tiles)
+
+        toa_l1c = np.zeros(len(mgrs_tiles))
+        lat_l1c = np.zeros(len(mgrs_tiles))
+        lon_l1c = np.zeros(len(mgrs_tiles))
+
+        tck = bisplrep(lat, lon, toa)
+
+        for ii in range(len(mgrs_tiles)):
+            (lat_l1c[ii], lon_l1c[ii]) = m.toLatLon(mgrs_tiles[ii])
+
+            toa_l1c[ii] = bisplev(lat_l1c[ii], lon_l1c[ii], tck)
+
+
+        # Do not compare with the professors output,
+        # 1. I need to plot the l1b grid and the l1c grid over
+        # the same plot
+        # plot spatial sampling distance (SSD)(distance between center of projection between 2 adjacent pixels),
+        # I can use the haversine function in geopy library
+
+
+
+
         return lat_l1c, lon_l1c, toa_l1c
 
     def checkSize(self, lat,toa):
@@ -73,4 +103,4 @@ class l1c(initL1c):
         :param toa: Radiance 2D matrix
         :return: NA
         '''
-        #TODO
+        # TODO
