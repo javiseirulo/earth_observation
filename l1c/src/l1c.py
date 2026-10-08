@@ -84,10 +84,11 @@ class l1c(initL1c):
             toa_l1c[ii] = bisplev(lat_l1c[ii], lon_l1c[ii], tck)
 
 
-        # Do not compare with the professors output,
+        # Do not compare with the professors output, what I have to do is:
         # 1. I need to plot the l1b grid and the l1c grid over
-        # the same plot
-        # plot spatial sampling distance (SSD)(distance between center of projection between 2 adjacent pixels),
+        # the same plot (to see how they compare) : it is an independent script for the plot, not part of the actual code,
+        # but an independent python script
+        # 2. plot spatial sampling distance (SSD)(distance between center of projection between 2 adjacent pixels),
         # I can use the haversine function in geopy library
 
 
